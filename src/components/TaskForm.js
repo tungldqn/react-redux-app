@@ -32,24 +32,26 @@ class TaskForm extends Component {
     this.setState({
       name: '',
       status: false
-    })
+    });
+    this.props.closeTaskForm();
   }
-  componentDidMount(){
+  componentWillMount(){
     console.log(this.props.taskEdit);
     if(this.props.taskEdit){
       this.setState({
         id: this.props.taskEdit.id,
-        iname: this.props.taskEdit.name,
+        name: this.props.taskEdit.name,
         status: this.props.taskEdit.status
       })
     }
   }
   render() {
+    let { id } = this.state;
     return (
       <div className='panel panel-warning'>
         <div className='panel-heading'>
           <h3 className='panel-title'>
-            Task Form
+            { id !== '' ? 'Edit task' : 'Add task'}
             <span className='fa fa-times-circle text-right' onClick={this.props.closeTaskForm}></span>
           </h3>
         </div>

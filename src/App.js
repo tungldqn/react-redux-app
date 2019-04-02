@@ -52,12 +52,19 @@ class App extends React.Component {
   }
   handleSubmit(data){
     let { tasks } = this.state;
-    data.id = this.generateId();
-    tasks.push(data);
+    if ( data.id === ''){
+      data.id = this.generateId();
+      tasks.push(data);
+    } else {
+      let index = this.findIndex(data.id);
+      tasks[index] = data
+    }
     this.setState({
-      tasks: tasks
+      tasks: tasks,
+      taskEdit: null
     })
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    this.closeTaskForm()
   }
   updateStatus(id){
     let { tasks } = this.state;
