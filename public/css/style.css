@@ -1,0 +1,13 @@
+.mr-5 {
+  margin-right: 5px;
+}
+.mr-15 {
+  margin-right: 15px;
+}
+.mt-15 {
+  margin-top: 15px;
+}
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+}
