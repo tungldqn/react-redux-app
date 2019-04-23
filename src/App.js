@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import TaskForm from './components/TaskForm';
 import TaskControl from './components/TaskControl';
 import TaskList from './components/TaskList';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props){
     super(props);
     this.state = {

@@ -62,9 +62,9 @@ class TaskList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
+  return { 
     tasks: state.tasks
   }
-} 
+}
 
 export default connect(mapStateToProps, null)(TaskList)
