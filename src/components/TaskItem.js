@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index';
 
 class TaskItem extends Component {
-  constructor(props){
-    super(props);
-    this.deleteTaskItem = this.deleteTaskItem.bind(this);
-    this.updateStatus = this.updateStatus.bind(this);
-    this.editTaskItem = this.editTaskItem.bind(this);
+  editTaskItem = () => {
+    this.props.openForm()
+    this.props.editTask(this.props.task)
   }
-  deleteTaskItem(){
-    this.props.deleteTaskItem(this.props.task.id);
-  }
-  updateStatus(){
-    this.props.updateStatus(this.props.task.id);
-  }
-  editTaskItem(){
-    this.props.editTaskItem(this.props.task.id);
+  deleteTaskItem = () => {
+    this.props.deleteTask(this.props.task);
+    this.props.clearForm()
   }
   render(){
     let { index, task } = this.props;
@@ -23,7 +18,7 @@ class TaskItem extends Component {
         <td className='text-center'>{index + 1}</td>
         <td>{task.name}</td>
         <td className='text-center'>
-          <span className={task.status ? 'label label-success' : 'label label-danger'} onClick={this.updateStatus}>{task.status ? 'Active' : 'Disabled'}</span>
+          <span className={task.status ? 'label label-success' : 'label label-danger'} onClick={() => this.props.updateStatus(this.props.task)}>{task.status ? 'Active' : 'Disabled'}</span>
         </td>
         <td className='text-center'>
           <button type='button' className='btn btn-warning mr-5' onClick={this.editTaskItem}>
@@ -36,6 +31,32 @@ class TaskItem extends Component {
       </tr>
     )
   }
-} 
+}
 
-export default TaskItem
+const mapStateToProps = (state) => {
+  return { 
+    tasks: state.tasks
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateStatus: task => {
+      dispatch(actions.updateStatus(task))
+    },
+    deleteTask: id => {
+      dispatch(actions.deleteTask(id))
+    },
+    openForm: () => {
+      dispatch(actions.openForm())
+    },
+    clearForm: () => {
+      dispatch(actions.clearForm())
+    },
+    editTask: task => {
+      dispatch(actions.editTask(task))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem)

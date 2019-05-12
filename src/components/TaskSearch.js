@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index';
 
 class TaskSearch extends Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state ={
       keyword: ''
     }
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(event){
+  handleChange = event => {
     let target = event.target;
     let name = target.name;
     let value = target.value;
@@ -23,7 +24,7 @@ class TaskSearch extends Component {
         <div className='input-group'>
           <input name='keyword' type='text' className='form-control' placeholder='Enter your key...' value={this.state.keyword} onChange={this.handleChange} />
           <span className='input-group-btn'>
-            <button className='btn btn-primary' type='button' onClick={() => this.props.handleSearch(keyword)}>
+            <button className='btn btn-primary' type='button' onClick={() => this.props.searchTask(keyword)}>
               <span className='fa fa-search mr-5'></span>Find
             </button>
           </span>
@@ -31,6 +32,14 @@ class TaskSearch extends Component {
       </div>
     )
   }
-} 
+}
 
-export default TaskSearch
+const mapDispatchToProps = dispatch => {
+  return {
+    searchTask: keyword => {
+      dispatch(actions.searchTask(keyword))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TaskSearch)
